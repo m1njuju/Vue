@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+</head>
+<body>
+    
+    <div id="app">
+        <h1>홀짝 확인</h1>
+        <!-- v-model을 통해 value값 전달 / 없으면 boolean값 -->
+        <input type="radio" name="num" value="1" v-model="usernum"> 홀
+        <input type="radio" name="num" value="0" v-model="usernum"> 짝
+        <button @click="randomNum">결과 확인</button>
+        <p>결과 : {{ result }}</p>
+    </div>
+
+    <script>
+        new Vue({
+            el :'#app',
+            data: {
+                result : "",
+                usernum : 1,
+            },
+            methods : {
+                randomNum() {
+                    //0 또는 1
+                    let ranNum = Math.floor(Math.random()*2);
+                    //usernum의 값과 ranNum값을 비교해서
+                    
+                    if(ranNum == this.usernum) {
+                        //같으면 맞혔습니다
+                        this.result = "맞혔습니다";
+                    }
+                    else {//틀렸으면 틀렸습니다
+                        this.result="틀렸습니다";
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

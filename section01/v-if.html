@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    
+    <div id="app">
+        <button v-on:click="error= !error">
+            error true/false
+        </button>
+        <p v-if="error">에러 발생 : 이미지를 로드하지 못했습니다.</p>
+        <p v-else-if="appear"> 에러는 발생하지 않았지만 그림은 없습니다.</p>
+        <p v-else> 마지막 else로 만들어진 p요소입니다</p><br>
+
+        <button v-on:click="login = !login">임시로그인 버튼</button>
+        <!-- login true -->
+        <p v-if="login">{{id}}님이 로그인을 하였습니다</p>
+
+        <!-- login false -->
+        <div v-else>
+            <p>아이디를 입력해 주세요</p>
+            <input type="text" v-model="id">
+        </div><br>
+        
+        <button v-on:click="canAddCart = !canAddCart">임시canAddCart버튼</button>
+        <div v-if="canAddCart">
+            <p>상품이 있습니다</p>
+            <button>구매가능합니다</button>
+        </div>
+
+        <div v-else>
+            <p>상품이 없습니다</p>
+            <button disabled>구매 불가능합니다</button>
+        </div>
+
+        <p>{{ canAddCart ? "상품이 있습니다":"상품이 없습니다" }}</p>
+        <button v-bind:disabled="!canAddCart">구매 {{ canAddCart ? "가능":"불가능" }}합니다</button>
+
+        <!-- v-show는 display의 값을 none으로 하여 보이지 않게 숨긴다. -->
+        <h3 v-show="canAddCart">상품이 있으므로 보입니다</h3>
+
+
+    </div>
+
+    <script>
+        new Vue({
+            el : "#app",
+            data : {
+                error : false,
+                appear : "",
+                login : false,
+                id : "",
+                canAddCart : true
+            }
+        });
+    </script>
+</body>
+</html>

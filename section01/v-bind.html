@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .blue_style {
+            color: blue;
+        }
+        /*red_style*/
+        .red_style {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <h3 v-bind:class="sColor+'_style'">Vue bind</h3>
+        <!-- 
+            bind로 접근할 수 있는 대표적인 값
+            이미지의 src, a의 href, class, style, key
+        -->
+        <input type="text" :value="sDate" :disabled="disable">
+        <p>{{ sTime }}</p>
+
+        <h2>v-bind 실습</h2>
+        <p>{{ name+"입니다" }}</p>
+        <p>{{1-30}}</p>
+        <input type="checkbox" :checked="checked">
+        <img src="" alt="" :src="image">
+
+
+        <h3>머스테치의 사용방법</h3>
+        <p>산술연산자 사용가능 : {{1-30}}</p>
+        <p>관계, 비교 연산자 사용 가능 : {{ 1>40 }}</p>
+        <p>삼항 연산자 사용 가능 : {{ 1>40 ? "참입니다" : "거짓입니다" }}</p>
+        <p>data의 값을 넣어서 연산자 사용 가능 : {{ sColor=="red"? "빨간색" : "파란색" }}</p>
+
+    </div>
+
+    <script>
+        new Vue({
+            el : '#app',
+            data : {
+                sDate : "현재 년도 : "+new Date().getFullYear(),
+                sColor : "blue", // 컬러이름을 바꿔서 확인
+                sTime : `${new Date().getHours()}:${new Date().getMinutes()}`,
+                disable : true,
+                name : "bird",
+                checked : true,
+                image : "https://cdn.pixabay.com/photo/2022/01/31/12/46/bird-6983434_960_720.jpg"
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
