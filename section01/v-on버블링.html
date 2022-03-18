@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .div {
+            background-color: bisque;
+            border: black 1px solid;
+        }
+        p {
+            background-color: burlywood;
+            border: black 1px solid ;
+        }
+        span {
+            background-color: brown;
+            border: black 1px solid ;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="div" @click="msg" id="div">
+            <!--
+                Vue도 자바스크립트를 기반으로 하기에 버블링 발생
+                stop 키워드를 통해서 막을 수 있다.
+            -->
+            <p @click.stop="msg" id="p">p태그 안의 
+                <span @click.stop="msg" id="span">span태그</span>입니다</p>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el : "#app",
+            data : {
+            },
+            methods : {
+                msg(e) {
+                    //e.stopPropagation();
+                    return alert(e.target.id +":"+e.currentTarget.id);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
