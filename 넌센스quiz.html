@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>넌센스퀴즈</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        body {
+            background-color: lightcyan;
+            text-align: center;
+        }
+        #start:visited, #start:link {
+            text-decoration: none;
+            color: burlywood;
+        }
+        #start:hover {
+            text-decoration: none;
+            color: cornflowerblue;
+        } 
+        #log {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>넌센스 Quiz 맞히기</h1>
+        <p>3문제 - 중복있음</p>
+        <!-- 머스테치를 이용해서 time 값 가져오기 -->
+        <p>{{time}}초</p>
+
+        <!-- v-on을 이용한 이벤트 : show값 변경, 초기화, 퀴즈시작 -->
+        <h3><a href="" v-on:click.prevent="showBtn">시작</a></h3>
+    
+        <!-- v-on을 이용한 이벤트 : 값을 들고와 비교 후 3문제가 지나면 종료 -->
+        <form v-if="show" v-on:submit.prevent="onSubmit">
+            <!-- 머스테치를 이용해서 quiz 값 가져오기 : computed random quiz 들고옴 -->
+            <h3>{{quiz}}</h3>
+            <!-- v-model을 이용한 양방향 -->
+            <input type="text" placeholder="답을 입력해 주세요" v-model="useranswer">
+        </form>
+        <!-- 머스테치를 이용해서 score 값 가져오기 -->
+        <p v-show="show">{{score}}개 맞혔습니다</p>
+    </div>
+    
+    <script>
+        new Vue({
+            el : '#app',
+            data : {
+                show : false,
+                time : 0,
+                timeId : "",
+                useranswer : "",
+                random : 0,
+                usedQuiz : [],
+                quizArray : [
+                    {quiz:"오리가 얼면?", answer:"언덕"},
+                    {quiz:"왕이 넘어지면?", answer:"킹콩"},
+                    {quiz:"아몬드가 죽으면?", answer:"다이아몬드"},
+                    {quiz:"해가 우는 곳은?", answer:"해운대"},
+                    {quiz:"반성문을 영어로?", answer:"글로벌"}
+                ],
+                score : 0,
+                count : 0,
+            },
+            methods : {
+                showBtn : function() {
+                    //초기화
+                    this.quizArray = this.quizArray.concat(this.usedQuiz)
+
+                    this.score = 0;
+                    this.count = 0;
+                    this.show = !this.show;
+                    clearTimeout(this.timeId);
+                    this.time = 0;
+                    if(this.show) {
+                        this.timeId = setInterval(() => {this.time++}, 1000);
+                    }
+                    this.startquiz();
+                },
+                onSubmit : function() {
+                    if(userAnswer == this.quizArray[this.random].answer) {
+                        this.score++;
+                        // splice(인덱스, 삭제할 갯수) : 삭제한 요소를 배열로 반환
+                        this.usedQuiz.push(this.quizArray.splice(quizArray[this.random], 1)[0] );
+                    }
+
+                    this.startquiz();
+
+                    //총 갯수 값 증가
+                    this.count++;
+                    this.useranswer = "";
+
+                    //3번 지났을 때 종료
+                    if(this.count == 3) {
+                        this.show = false;
+                        clearTimeout(this.timeId);
+                    }
+                },
+                startquiz : function() {
+                    //랜덤값 바꾸기
+                    this.random = Math.floor(Math.random()*this.quizArray.length);
+                },
+                
+            },
+            computed : {
+                //퀴즈 화면에 출력
+                quiz : function() {
+                    return this.quizArray[this.random].quiz;
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
