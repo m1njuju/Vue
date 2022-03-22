@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+
+    <div id="app">
+        <label for="">이름을 작성해 주세요</label>
+        <input type="text" >
+        <child-component v-bind:childname="name[0]" age="20"></child-component>
+        <child-component v-bind:childname="firstName" age="10"></child-component>
+
+        <!-- 배열의 값을 인덱스로 접근 -->
+        <child2-component v-bind:name="name[0]"></child2-component>
+        <child2-component v-bind:name="name[1]"></child2-component>
+
+        <!-- 배열의 값을 v-for를 이용하여 변수로 접근 -->
+        <child2-component v-bind:name="n" v-for="n in name"></child2-component>
+
+
+    </div>
+
+    <script>
+
+
+        Vue.component('child2-component',{
+            props : ['name'],
+            template: `
+            <div>
+                <p>자식 컴포넌트에 작성되고 있습니다 : {{name}}</p>
+            </div>
+            `
+        })
+
+
+        Vue.component('child-component',{
+            // html의 속성명=값 형식으로 외부에서 받아오는 값
+            props : ['childname','age'],
+            template : `
+            <div>
+                <p>자식 컴포넌트에 작성되고 있습니다 : {{childname}}</p>
+                <p>{{age}}세입니다</p>
+                <p>{{adress}}에 거주 중입니다</p>
+            </div>
+            `,
+            // Vue컴포넌트 내부에서 사용되는 값
+            data : function() {
+                return {
+                    adress : '부산',
+                };
+            }
+        })
+
+        new Vue({
+            el:'#app',
+            data : {
+                name : ['철수','영희'],
+                firstName : "홍"
+            }
+        })
+    </script>
+</body>
+</html>

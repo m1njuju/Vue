@@ -1,0 +1,7 @@
+자바스크립트
+객체, 함수 : 캐멀케이스(camelCase) numCount()
+변수 : random_num
+
+HTML
+컴포넌트, style(CSS)
+ : send-message 케밥케이스(kebab-case)
