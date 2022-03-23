@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    
+    <div id="app">
+        <scopedslot-component>
+            <!-- 자식의 지정된 속성 값을 부모로 가져와서 사용할 수 있다 -->
+            <!-- {}없이 들고오면 객체로 들고 옴-->
+            <template slot="num" slot-scope= '{num}'>
+                <p>{{num}}</p>
+                <p>{{num.num}}</p>
+                <p v-for="n in num">{{n}}</p>
+            </template>
+        </scopedslot-component>
+
+        <show-picture>
+            <template slot-scope= '{catsname}'>
+                <p v-for="item in catsname">{{item}}</p>
+            </template>
+        </show-picture>
+    </div>
+
+    <script>
+        Vue.component('show-picture',{
+            template : 
+            `<div>
+                <slot v-bind:catsname="catsname"></slot>
+            </div>`,
+            data : function() {
+                return {
+                    catsname : ["랙돌","코리안숏","러시안블루"]
+                };
+            }
+        })
+
+        Vue.component('scopedslot-component',{
+            template : 
+            `<div>
+                <h3> scoped 슬롯 사용</h3>
+                <!-- slot의 num 속성에 컴포넌트의 number값을 전달 -->
+                <slot name="num" v-bind:num="number"></slot>
+                <slot name="name" v-bind:newname="cname"></slot>
+            </div>`,
+            data : function() {
+                return {
+                    number : [1,2,3],
+                    cname : "홍길동"
+                };
+            }
+        })
+
+        new Vue({
+            el : '#app'
+        })
+    </script>
+</body>
+</html>

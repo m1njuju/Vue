@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+
+        <slot-component>
+            새로운 값을 넣어줍니다
+        </slot-component>
+        <slot-component>
+            <p>태그를 작성해서 넣어줍니다</p>
+            <p>전체 내용이 slot에 들어갑니다</p>
+        </slot-component>
+
+        <link-component url="https://www.naver.com/"> 네이버 </link-component>
+        <link-component url="https://www.daum.net/"> 다음 </link-component><br>
+
+        <input type="text" v-model="memo">
+        <button @click="addMemo">추가</button>
+        <memo-component v-for="m in memolist">{{m}}</memo-component>
+
+    </div>
+
+    <script>
+        Vue.component('memo-component',{
+            template : 
+            `<div>
+                <h3>메모</h3>
+                <slot></slot> <br>
+                <p>{{date}}</p>
+            </div>`,
+            data : function() {
+                return {
+                    date : new Date()
+                };
+            }
+        })
+
+        Vue.component('link-component',{
+            props : ['url'],
+            template :
+            `<div>
+                <p>슬롯사용</p>
+                <a v-bind:href="url">
+                    <slot></slot>
+                </a>
+            </div>`
+        })
+
+        Vue.component('slot-component',{
+            template :
+            `<div>
+                <h3>슬롯입니다</h3>
+                <slot></slot>
+            </div>`
+        })
+
+        new Vue({
+            el : '#app',
+            data : {
+                memo : "",
+                memolist : []
+            },
+            methods : {
+                addMemo : function() {
+                    //memo의 값을 들고와서 memolist에 넣어준다
+                    this.memolist.push(this.memo);
+                    this.memo = "";
+                }
+            }
+        })
+    </script>
+</body>
+</html>
