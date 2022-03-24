@@ -1,13 +1,14 @@
 Vue.component('memo-component',{
-    props : ['id'],
+    //임의로 생성해 준 속성, 변수
+    props : ['id','colorid'],
     template : 
     `<div>
         <h3>
             메모
             <button @click="deletememo">X</button>
         </h3>
-        <p>{{time}}</p>
         <slot></slot>
+        <p>{{time}}</p>
     </div>`,
     data : function() {
         return {

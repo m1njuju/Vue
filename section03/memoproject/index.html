@@ -14,10 +14,12 @@
     <div id="app">
         <input type="text" v-model="memo">
         <button @click="addMemo">추가</button>
-        <memo-component v-for="m in memolist"
+        <memo-component 
+        v-for="m in memolist"
         v-bind:id="m.id"
-        @delete="deleteMemo"
-        >
+        v-bind:key="m.id"
+        colorid="blue"
+        @delete="deleteMemo">
         {{m.memo}}
         </memo-component>
     </div>

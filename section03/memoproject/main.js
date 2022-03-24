@@ -1,9 +1,13 @@
 new Vue({
     el : '#app',
     data : {
-        id : 0, // 메모의 개인값을 알기 위함
+        id : 3, // 메모의 개인값을 알기 위함(메모를 겹치지 않게 찾기 위해)
         memo : '',
-        memolist : []
+        memolist : [
+            {id : 0, memo:"미리작성된메모입니다"},
+            {id : 1, memo:"미리작성된메모입니다"},
+            {id : 2, memo:"미리작성된메모입니다"}
+        ]
     },
     methods : {
         addMemo : function() {
