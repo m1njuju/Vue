@@ -16,8 +16,10 @@
         <product-display></product-display>
 
         <!-- 리뷰 리스트 (출력) : vue인스턴스 data의 reviews:[] -->
+        <!-- 안에서 v-for로 반복하기 위해서 배열을 통채로 넘겨줌 -->
         <review-list v-bind:reviews="reviews"></review-list>
 
+        
         <!-- 리뷰 작성 폼 -->
         <review-form v-on:submit-review="addReview"></review-form>
     </div>
