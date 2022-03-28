@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습확인</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        li { list-style-type: none;}
+        .product {
+            border-radius: 20px;
+            border: solid gainsboro 1px;
+            width: 400px;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .product img{ 
+            width: 300px;
+            height: 450px;
+            border-radius: 10px;
+        }
+        .product button{ 
+            border: none;
+            background-color: transparent;
+            font-size: x-large;
+            color: darkgray;
+            cursor: pointer;
+        }
+        .product button.on{ 
+            border: none;
+            background-color: transparent;
+            font-size: x-large;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <product-component :products="products"></product-component>
+    </div>
+
+    <script>
+        Vue.component('product-component',{
+            props : ['products'],
+            data : function() {
+                return {
+                    classOn : false
+                }
+            },
+            template : `
+            <div class="product">
+                <div v-for="product in products">
+                    <img :src="product.img" alt="galaxy s22 Ultra">
+                    <h3>{{product.name}}</h3>
+                    <ul>
+                        <li v-for="detail in product.detail">{{detail}}</li>
+                    </ul>
+                    <button :class="{ on: classOn }" @click="classOn = !classOn"> ♥ </button>
+                </div>
+                
+            </div>
+            `
+        })
+
+        new Vue({
+            el: '#app',
+            data : {
+                //제품이 여러개 들어올 경우 반복하기 위함
+                products : [
+                    {
+                        id : 0,
+                        name : 'Galaxy s22 Ultra',
+                        img : './galaxy22.png',
+                        detail : [
+                            '디스플레이 : 178.55mm',
+                            'CPU종류 : Octa-Core'
+                        ]
+                    }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

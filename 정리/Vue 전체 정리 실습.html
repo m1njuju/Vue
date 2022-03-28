@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습확인</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        li { list-style-type: none;}
+        .product {
+            border-radius: 20px;
+            border: solid gainsboro 1px;
+            width: 400px;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .product img{ 
+            width: 300px;
+            height: 450px;
+            border-radius: 10px;
+        }
+        .product button{ 
+            border: none;
+            background-color: transparent;
+            font-size: x-large;
+            color: darkgray;
+            cursor: pointer;
+        }
+        .product button.on{ 
+            border: none;
+            background-color: transparent;
+            font-size: x-large;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <samsung-component></samsung-component>
+    </div>
+
+    <script>
+        Vue.component('samsung-component',{
+            data : function() {
+                return {
+                    image : "./galaxy22.PNG",
+                    title : "Galaxy S22 Ultra",
+                    details : ["디스플레이 : 178.55mm","CPU종류 : Octa-Core"],
+                    isSelected : false
+                }
+            },
+            methods: {
+                toggleClass : function() {
+                    this.isSelected = !this.isSelected;
+                }
+            },
+            template : `
+            <div class="product">
+                <img :src="image" alt="galaxy s22 Ultra">
+
+                <h3>{{title}}</h3>
+
+                <ul>
+                    <li v-for="detail in details">{{detail}}</li>
+                </ul>
+
+                <!-- 버튼을 누르면 하트가 색칠이 되게(.on 클래스가 사라지게) -->
+                <button :class="{ on: isSelected }" @click="toggleClass"> ♥ </button>
+            </div>
+            `
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+</html>

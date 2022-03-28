@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <!-- v-디렉티브 -->
+        <!-- v-on 1) -->
+        <p>{{message}}</p>
+        <button v-on:click="changeMessage">메시지가 바뀝니다</button><br><br>
+
+        <!-- v-on 2) -->
+        <input type="checkbox" :checked="checked">
+        <button v-on:click="checked=!checked">체크가 해제됩니다</button><br><br>
+
+        <!-- v-on 3) -->
+        <button @click="changeMessage">메시지가 바뀝니다</button><br><br>
+
+        <!-- v-for 1) -->
+        <!--배열인 경우-->
+        <p v-for="item in array">{{item}}</p>
+        <!--객체인 경우-->
+        <p v-for="value in object">{{value.name}} {{value.age}}</p>
+        <!--숫자인 경우-->
+        <p v-for="n in 3">{{n}}</p>
+
+        <!-- v-for 2) 답:3-->
+
+        <!-- v-bind 1) -->
+        <p v-bind:class="className">데이터 옵션의 값을 이용</p>
+        <p v-bind:class="colorStyle+'_style'">데이터 옵션의 값과 문자열 이용</p>
+        <p v-bind:class="{ blue_style : buttonOn }">객체형식을 이용해서</p>
+
+        <!-- v-bind 2) -->
+        <img v-bind:src="srcImg" alt="이미지대체"><br>
+
+        <!-- v-bind 3) -->
+        <img :src="srcImg" alt="이미지대체"><br><br>
+
+        <!-- v-model 1) 양방향 바인딩은 사용자의 입력값과 html원래 값이 서로 가져올 수 있는 것-->
+        <!-- 정답 :
+            vue의 data와 html의 value값(true/false도 가져옴)을 연결하여
+            한쪽이 바뀌면 한쪽 값을 바꿈
+        -->
+
+        <!-- v-model 2) -->
+        <textarea v-model="value" cols="30" rows="10"></textarea>
+
+        <!-- 컴포넌트 1) -->
+        <prop-component v-bind:name="name" v-bind:age="age"
+            @my-event="parentMethod"></prop-component>
+
+        <!-- 사용자 정의 이벤트 1) $emit은 자식의 이벤트를 부모에게 전달한다-->
+        <!-- 
+            사용자 지정 이벤트 발생 > delete, add, sub-count 
+            this.$emit('이벤트 이름', 인수)
+        -->
+    </div>
+
+    <script>
+        Vue.component('prop-component',{
+            props: ['name','age'],//컴포넌트 1)
+            template : `<!-- 컴포넌트 2) -->
+            <div>
+                <P>{{name}}, {{age}}</p>
+                <!-- <p v-if="{{name}}"> 동일하게 속성 이름으로 사용 -->
+                <button @click="changename">이름이 바뀝니다</button>
+                <p>{{message}}</p><br>
+                <button @click="childmethod">$emit을 이용한 이벤트 전달</button>
+            </div>
+            `,
+            methods : {// 컴포넌트 3)
+                changename: function() {
+                    this.name = "홍길동";
+                },
+                childmethod : function() {
+                    this.$emit('my-event',this.msg);
+                }
+            },
+            data : function() {// data 1)
+                return {
+                    message: "컴포넌트의 data는 함수 형식으로 작성해야 한다",
+                    msg: "$emit으로 자식이 부모에게 보낸 값"
+                }
+            }
+        })
+
+        new Vue({
+            el : '#app',
+            data : {
+                name:"성춘향",
+                age:25,
+                message : "안녕",
+                checked : true,
+                array : ["바나나","딸기","사과"],
+                object : [{
+                    name : "홍길동",
+                    age : 20
+                }],
+                className: "on",
+                colorStyle: "red",
+                buttonOn: true,
+                srcImg : "./img/image1.png",
+                value: "value 속성이 data에 들어간다"
+            },
+            methods : {
+                changeMessage : function() {
+                    this.message = "메소드로 바꾼 메시지입니다"
+                },
+                parentMethod : function(msg) {
+                    this.message = msg;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
